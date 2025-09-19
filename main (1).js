@@ -1,19 +1,30 @@
 'use strict';
 
+// Imágenes proporcionadas
+const IMG1 = 'https://m.media-amazon.com/images/I/71LZQxV1UmL._AC_SL1500_.jpg';
+const IMG2 = 'https://m.media-amazon.com/images/I/71vKtTAM5DL._AC_SL1500_.jpg';
+const IMG3 = 'https://m.media-amazon.com/images/I/71+Q--+HcoL._AC_SL1500_.jpg';
+
+// ===== Datos =====
 const products = [
-  { name: 'Detergente Líquido',      price: 12.99, stars: 5, reviews: 118, seller: 'CleanPro', image: 'https://via.placeholder.com/300x300?text=Detergente' },
-  { name: 'Limpiacristales',         price: 8.99,  stars: 4, reviews: 96,  seller: 'CleanPro', image: 'https://via.placeholder.com/300x300?text=Limpiacristales' },
-  { name: 'Multiusos Citrus',        price: 6.49,  stars: 4, reviews: 73,  seller: 'EcoHome',  image: 'https://via.placeholder.com/300x300?text=Multiusos' },
-  { name: 'Fregona Microfibra',      price: 14.5,  stars: 3, reviews: 40,  seller: 'HogarPlus',image: 'https://via.placeholder.com/300x300?text=Fregona' },
-  { name: 'Lejía Gel',               price: 2.2,   stars: 4, reviews: 340, seller: 'EcoHome',  image: 'https://via.placeholder.com/300x300?text=Lejia+Gel' },
-  { name: 'Ambientador Vainilla',    price: 3.99,  stars: 5, reviews: 510, seller: 'AromaCo',  image: 'https://via.placeholder.com/300x300?text=Ambientador' },
-  { name: 'Guantes Nitrilo (100u)',  price: 9.99,  stars: 4, reviews: 210, seller: 'HogarPlus',image: 'https://via.placeholder.com/300x300?text=Guantes' },
-  { name: 'Mopa Spray',              price: 24.9,  stars: 3, reviews: 31,  seller: 'CleanPro', image: 'https://via.placeholder.com/300x300?text=Mopa+Spray' },
-  { name: 'Desinfectante Hogar',     price: 5.49,  stars: 4, reviews: 189, seller: 'AromaCo',  image: 'https://via.placeholder.com/300x300?text=Desinfectante' },
+  { name: 'Detergente Líquido',      price: 12.99, stars: 5, reviews: 118, seller: 'CleanPro', image: IMG1 },
+  { name: 'Limpiacristales',         price: 8.99,  stars: 4, reviews: 96,  seller: 'CleanPro', image: IMG3 },
+  { name: 'Multiusos Citrus',        price: 6.49,  stars: 4, reviews: 73,  seller: 'EcoHome',  image: IMG2 },
+  { name: 'Fregona Microfibra',      price: 14.5,  stars: 3, reviews: 40,  seller: 'HogarPlus',image: IMG2 },
+  { name: 'Lejía Gel',               price: 2.2,   stars: 4, reviews: 340, seller: 'EcoHome',  image: IMG1 },
+  { name: 'Ambientador Vainilla',    price: 3.99,  stars: 5, reviews: 510, seller: 'AromaCo',  image: IMG3 },
+  { name: 'Guantes Nitrilo (100u)',  price: 9.99,  stars: 4, reviews: 210, seller: 'HogarPlus',image: IMG1 },
+  { name: 'Mopa Spray',              price: 24.9,  stars: 3, reviews: 31,  seller: 'CleanPro', image: IMG2 },
+  { name: 'Desinfectante Hogar',     price: 5.49,  stars: 4, reviews: 189, seller: 'AromaCo',  image: IMG3 },
 ];
 
 const eur = n => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(n);
 
+// Placeholder de respaldo por si alguna imagen falla
+const FALLBACK_IMG = (title = 'Producto') =>
+  `https://placehold.co/600x400?text=${encodeURIComponent(title)}`;
+
+// ===== Render =====
 function renderProducts(list) {
   const grid = document.getElementById('grid');
   const empty = document.getElementById('empty');
@@ -49,6 +60,15 @@ function renderProducts(list) {
 
   grid.innerHTML = html;
 
+  // Fallback si falla una imagen
+  grid.querySelectorAll('img').forEach(img => {
+    img.addEventListener('error', () => {
+      const title = img.closest('article')?.querySelector('h3')?.textContent || 'Producto';
+      img.src = FALLBACK_IMG(title);
+    }, { once: true });
+  });
+
+  // Demo botón
   grid.querySelectorAll('.btn-buy').forEach(btn => {
     btn.addEventListener('click', e => {
       e.preventDefault();
@@ -59,7 +79,7 @@ function renderProducts(list) {
   });
 }
 
+// ===== Inicio =====
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[Galería] DOM listo, renderizando productos…');
   renderProducts(products);
 });

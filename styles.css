@@ -1,8 +1,4 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: 'Roboto', sans-serif;
@@ -38,14 +34,8 @@ header nav ul li a {
   padding: 2rem;
 }
 
-.banner h2 {
-  font-size: 2rem;
-}
-
-.banner p {
-  margin: 1rem 0;
-  font-size: 1.2rem;
-}
+.banner h2 { font-size: 2rem; }
+.banner p { margin: 1rem 0; font-size: 1.2rem; }
 
 .banner .btn {
   background-color: #0078d7;
@@ -85,7 +75,7 @@ header nav ul li a {
 .productos img {
   width: 40%;
   height: auto;
-  margin: 0 auto;
+  margin: 0.75rem auto 0;
   display: block;
 }
 
@@ -99,15 +89,28 @@ header nav ul li a {
   font-size: 1rem;
 }
 
-.productos a {
+/* meta (estrellas, reviews, seller) */
+.productos .meta {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  color: #666;
+  font-size: .95rem;
+  padding-top: 0;
+}
+
+.productos a.btn-buy {
   display: block;
   text-align: center;
   background-color: #0078d7;
   color: white;
-  padding: 0.5rem;
+  padding: 0.6rem;
   text-decoration: none;
   border-radius: 0 0 5px 5px;
+  font-weight: bold;
+  transition: filter .15s ease;
 }
+.productos a.btn-buy:hover { filter: brightness(1.05); }
 
 footer {
   background-color: #333;
@@ -118,17 +121,10 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .banner h2 {
-    font-size: 1.5rem;
-  }
-
-  .productos ul {
-    grid-template-columns: 1fr;
-  }
+  .banner h2 { font-size: 1.5rem; }
+  .productos ul { grid-template-columns: 1fr; }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .productos ul {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .productos ul { grid-template-columns: repeat(2, 1fr); }
 }
